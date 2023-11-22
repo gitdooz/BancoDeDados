@@ -1,0 +1,71 @@
+CREATE TABLE cadfun (CODFUN  NUMBER,
+                     NOME    VARCHAR2(40),
+                     DEPTO   VARCHAR2(2),
+                     FUNCAO  VARCHAR2(20),
+                     SALARIO NUMBER(10,2));
+-------------------------------------------------------------------------------   
+INSERT INTO cadfun VALUES (1,  'CARLOS ALBERTO',   '3', 'VENDEDOR'   , 1530.00);
+INSERT INTO cadfun VALUES (2,  'MARCOS HENRIQUE',  '2', 'GERENTE'    , 1985.75);  
+INSERT INTO cadfun VALUES (3,  'APARECIDA SILVA',  '3', 'SECRETARIO' , 1200.50);   
+INSERT INTO cadfun VALUES (4,  'SILVANA PACHECO',  '5', 'SUPERVISOR' , 1599.51);   
+INSERT INTO cadfun VALUES (5,  'MARCELO SOUZA',    '3', 'ANALISTA'   , 2250.11);   
+INSERT INTO cadfun VALUES (6,  'MARISILVA NEVES',  '2', 'SECRETARIO' , 1200.50);   
+INSERT INTO cadfun VALUES (7,  'WILSON DE MACEDO', '3', 'PROGRAMADOR', 1050.00);   
+INSERT INTO cadfun VALUES (8,  'AUGUSTO SOUZA',    '3', 'PROGRAMADOR', 1050.00);   
+INSERT INTO cadfun VALUES (9,  'CARLOS BASTOS',    '5', 'VENDEDOR'   , 1530.00);
+INSERT INTO cadfun VALUES (10, 'SILVA SANTOS',     '3', 'SUPERVISOR' , 1599.51);
+INSERT INTO cadfun VALUES (11, 'ANA BASTOS',       '5', 'VENDEDOR'   , 1530.00);   
+INSERT INTO cadfun VALUES (12, 'PAULO DA SILVA',   '2', 'VENDEDOR'   , 1530.00);     
+-------------------------------------------------------------------------------   
+SELECT * FROM cadfun;
+SELECT nome FROM cadfun WHERE depto = '3';
+SELECT nome, salario FROM cadfun ORDER BY nome ASC; 
+SELECT depto, nome FROM cadfun ORDER BY depto ASC, nome DESC;
+SELECT nome FROM cadfun WHERE depto = '3' ORDER BY nome DESC;
+SELECT * FROM cadfun WHERE codfun = 7;
+UPDATE cadfun SET salario = 2300.56 WHERE codfun = 7;
+SELECT * FROM cadfun WHERE codfun = 7;
+SELECT * FROM cadfun WHERE nome = 'ANA BASTOS';
+UPDATE cadfun SET depto = '3' WHERE nome = 'ANA BASTOS';
+SELECT * FROM cadfun WHERE depto = '3';
+UPDATE cadfun SET salario = salario * 1.1;
+SELECT * FROM cadfun;
+SELECT * FROM cadfun WHERE salario >= 2000;
+SELECT * FROM cadfun WHERE nome LIKE 'C%';
+SELECT * FROM cadfun WHERE nome LIKE 'M_R%';
+SELECT * FROM cadfun WHERE nome LIKE '__R%';
+SELECT * FROM cadfun WHERE nome LIKE '__R%S';
+SELECT * FROM cadfun WHERE nome LIKE 'SILVA %' OR nome LIKE'% SILVA' OR nome LIKE '% SILVA %';
+SELECT * FROM cadfun WHERE ' ' || nome || ' ' LIKE '% SILVA %';
+SELECT * FROM cadfun WHERE nome LIKE 'M%';
+SELECT * FROM cadfun WHERE funcao = 'PROGRAMADOR' or funcao = 'ANALISTA';
+SELECT * FROM cadfun WHERE funcao IN ('PROGRAMADOR', 'ANALISTA', 'VENDEDOR') ORDER BY nome ASC;
+SELECT * FROM cadfun WHERE funcao NOT IN ('PROGRAMADOR', 'ANALISTA');
+SELECT * FROM cadfun WHERE funcao <> 'PROGRAMADOR' AND funcao <> 'ANALISTA';
+SELECT * FROM cadfun WHERE salario >= 1500 AND salario <= 2000;
+SELECT * FROM cadfun WHERE salario BETWEEN 1500 and 2000; 
+SELECT * FROM cadfun WHERE salario < 1500 OR salario > 2500;
+SELECT * FROM cadfun WHERE salario NOT BETWEEN 1500 AND 2500;
+UPDATE cadfun SET funcao = NULL WHERE funcao = 'VENDEDOR';
+SELECT * FROM cadfun WHERE funcao IS NULL; 
+SELECT * FROM cadfun WHERE funcao IS NOT NULL; 
+UPDATE cadfun SET funcao = 'DIGITADOR' WHERE funcao IS NULL;
+SELECT * FROM cadfun WHERE funcao = 'DIGITADOR' ORDER BY nome ASC;
+SELECT * FROM cadfun WHERE funcao = 'PROGRAMADOR' AND salario > 2000 ORDER BY nome ASC;
+CREATE TABLE morto AS SELECT * FROM cadfun WHERE 1=2;
+SELECT * FROM morto;
+DESCRIBE morto;
+SELECT * FROM cadfun WHERE codfun = 12;
+INSERT INTO morto SELECT * FROM cadfun WHERE codfun = 12;
+SELECT nome, salario FROM cadfun WHERE salario IN (SELECT salario FROM morto);
+SELECT nome, depto FROM cadfun WHERE depto IN (SELECT depto FROM morto) ORDER BY nome ASC;
+SELECT POWER(2,3) FROM dual;
+SELECT SQRT(25) FROM dual;
+SELECT AVG(salario) FROM cadfun;
+SELECT TO_CHAR(AVG(salario),'999999.99') FROM cadfun;
+SELECT CAST(AVG(salario) AS NUMBER(8,2)) FROM cadfun;
+SELECT COUNT(*) AS "QUANTIDADE" FROM cadfun WHERE funcao IN ('PROGRAMADOR', 'SECRETARIO');
+SELECT funcao, COUNT(*) AS "Qnt" FROM cadfun GROUP BY funcao;
+SELECT MIN(salario) AS "Menor Salário", MAX(salario) AS "Maior Salário" FROM cadfun; 
+SELECT COUNT(DISTINCT funcao) FROM cadfun;
+SELECT DISTINCT funcao FROM cadfun ORDER BY funcao ASC;
